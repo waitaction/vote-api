@@ -1,4 +1,3 @@
-
 import { Injectable } from '@nestjs/common';
 import { Candidate } from '../entity/Candidate';
 
@@ -7,11 +6,10 @@ import { Candidate } from '../entity/Candidate';
  */
 @Injectable()
 export class CandidateService {
-
     /**
      * 创建候选人
      */
     createCandidate(candidate: Candidate): Promise<Candidate> {
-
+        return null;
     }
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Voter } from '../entity/Voter';
-
 /**
  * 投票的用户
  */
@@ -10,12 +9,14 @@ export class VoterService {
      * 登记投票的用户
      * @param voter 投票用户
      */
-    createVoter(voter: Voter): Promise<Voter> { }
-    
+    createVoter(voter: Voter): Promise<Voter> {
+        return null;
+    }
+
     /**
      * 投票
      */
-    vote(){
+    vote() {
 
     }
 }
