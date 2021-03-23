@@ -20,7 +20,7 @@ export class CandidateController {
 
     }
 
-    @ApiOperation({ summary: '添加一个候选人' })
+    @ApiOperation({ summary: '添加一个候选人到系统' })
     @ApiHeader({ name: 'Authorization', required: true, description: 'Bearer token' })
     @Post('addCandidate')
     @HttpCode(200)

@@ -10,6 +10,6 @@ export class ElectionModel {
 
     @ApiProperty({ description: '选举结束时间' })
     endTime: number;
-    @ApiProperty({ description: '选举人' })
+    @ApiProperty({ description: '候选人' })
     candidateIds: Array<string>;
 }

@@ -24,6 +24,7 @@ export class ElectionDetail {
     /**
      * 候选人 （管理員可以在系統中添加候選⼈，不可移除候選⼈，⼀場選舉最少2個候選⼈）
      */
+    @Column()
     candidateIds: Array<string>;
 
     /**

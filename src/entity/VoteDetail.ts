@@ -29,18 +29,32 @@ export class VoteDetail {
     /**
      * 创建时间
      */
-    @Column({ default: (new Date()).getTime() })
+    @Column()
     createTime?: number;
 
     /**
      * 修改时间
      */
-    @Column({ default: (new Date()).getTime() })
+    @Column()
     modifiedTime?: number;
     /**
      * 是否有效
      */
-    @Column({ default: true })
+    @Column()
     valid?: boolean;
 
+    /**
+     * 创建一个投票实例
+     * @param voterId 投票人身份证号
+     * @param candidateId 候选人身份证号
+     * @param electionId 选举id
+     */
+    constructor(voterId, candidateId, electionId) {
+        this.voterId = voterId;
+        this.candidateId = candidateId;
+        this.electionId = electionId;
+        this.createTime = new Date().getTime();
+        this.modifiedTime = new Date().getTime();
+        this.valid = true;
+    }
 }
