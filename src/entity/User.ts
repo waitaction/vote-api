@@ -1,4 +1,4 @@
-import { Entity, ObjectIdColumn, ObjectID, Column } from "typeorm";
+import { Entity, ObjectIdColumn, ObjectID, Column, EntityRepository, BaseEntity } from "typeorm";
 
 @Entity()
 export class User {
@@ -26,17 +26,26 @@ export class User {
     /**
      * 创建时间
      */
-    @Column({ default: (new Date()).getTime() })
+    @Column()
     createTime?: number;
 
     /**
      * 修改时间
      */
-    @Column({ default: (new Date()).getTime() })
+    @Column()
     modifiedTime?: number;
     /**
      * 是否有效
      */
     @Column({ default: true })
     valid?: boolean;
+
+    constructor(userName: string, pwd: string, isManager: boolean) {
+        this.userName = userName;
+        this.pwd = pwd;
+        this.isManager = isManager;
+        this.createTime = new Date().getTime();
+        this.modifiedTime = new Date().getTime();
+        this.valid = true;
+    }
 }

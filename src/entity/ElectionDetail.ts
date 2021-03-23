@@ -1,7 +1,7 @@
 import { Entity, ObjectIdColumn, ObjectID, Column } from "typeorm";
 
 /**
- * 选举详情表（注：一条记录为一场选举，每场选举关联候选人，）
+ * 选举详情表（注：一条记录为一场选举，每场选举关联候选人）
  */
 @Entity()
 export class ElectionDetail {
@@ -24,13 +24,13 @@ export class ElectionDetail {
     /**
      * 创建时间
      */
-    @Column({ default: (new Date()).getTime() })
+    @Column()
     createTime?: number;
 
     /**
      * 修改时间
      */
-    @Column({ default: (new Date()).getTime() })
+    @Column()
     modifiedTime?: number;
     /**
      * 是否有效
@@ -38,4 +38,11 @@ export class ElectionDetail {
     @Column({ default: true })
     valid?: boolean;
 
+    constructor(beginTime: number, endTime: number) {
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+        this.createTime = new Date().getTime();
+        this.modifiedTime = new Date().getTime();
+        this.valid = true;
+    }
 }
