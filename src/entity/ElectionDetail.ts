@@ -22,6 +22,11 @@ export class ElectionDetail {
     endTime: number;
 
     /**
+     * 候选人 （管理員可以在系統中添加候選⼈，不可移除候選⼈，⼀場選舉最少2個候選⼈）
+     */
+    candidateIds: Array<string>;
+
+    /**
      * 创建时间
      */
     @Column()
@@ -35,12 +40,13 @@ export class ElectionDetail {
     /**
      * 是否有效
      */
-    @Column({ default: true })
+    @Column()
     valid?: boolean;
 
-    constructor(beginTime: number, endTime: number) {
+    constructor(beginTime: number, endTime: number, candidateIds: Array<string>) {
         this.beginTime = beginTime;
         this.endTime = endTime;
+        this.candidateIds = candidateIds;
         this.createTime = new Date().getTime();
         this.modifiedTime = new Date().getTime();
         this.valid = true;

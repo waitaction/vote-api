@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { Candidate } from '../entity/Candidate';
 
 /**
@@ -6,10 +8,21 @@ import { Candidate } from '../entity/Candidate';
  */
 @Injectable()
 export class CandidateService {
+
+    constructor(
+        @InjectRepository(Candidate)
+        public readonly candidateRepository: Repository<Candidate>) {
+
+    }
+
     /**
-     * 创建候选人
+     * 添加候选人到系统
+     * @param name 姓名
+     * @param idCard 身份证号
+     * @returns 返回候选人信息
      */
-    createCandidate(candidate: Candidate): Promise<Candidate> {
-        return null;
+    addCandidate(idCard: string, name: string): Promise<Candidate> {
+        let candidate = new Candidate(idCard, name);
+        return this.candidateRepository.save(candidate);
     }
 }

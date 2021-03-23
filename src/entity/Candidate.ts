@@ -21,20 +21,26 @@ export class Candidate {
     /**
      * 创建时间
      */
-    @Column({ default: (new Date()).getTime() })
+    @Column()
     createTime?: number;
 
     /**
      * 修改时间
      */
-    @Column({ default: (new Date()).getTime() })
+    @Column()
     modifiedTime?: number;
     /**
      * 是否有效
      */
-    @Column({ default: true })
+    @Column()
     valid?: boolean;
 
-
+    constructor(id: string, name: string) {
+        this.id = id;
+        this.name = name;
+        this.valid = true;
+        this.createTime = new Date().getTime();
+        this.modifiedTime = new Date().getTime();
+    }
 
 }
