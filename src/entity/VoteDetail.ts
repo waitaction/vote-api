@@ -19,7 +19,7 @@ export class VoteDetail {
      * 投票人身份证号
      */
     @Column()
-    voterId: string;
+    voterIdCard: string;
 
     /**
      * 选举id
@@ -52,14 +52,14 @@ export class VoteDetail {
 
     /**
      * 创建一个投票实例
-     * @param voterId 投票人身份证号
+     * @param voterIdCard 投票人身份证号
      * @param candidateId 候选人身份证号
      * @param electionId 选举id
      */
-    constructor(voterId, candidateId, electionId) {
+    constructor(voterIdCard, candidateId, electionId) {
         this.candidateId = candidateId;
-        this.uniqueId = `${voterId}|${electionId}|${candidateId}`
-        this.voterId = voterId;
+        this.uniqueId = `${voterIdCard}|${electionId}|${candidateId}`
+        this.voterIdCard = voterIdCard;
         this.electionId = electionId;
         this.createTime = new Date().getTime();
         this.modifiedTime = new Date().getTime();

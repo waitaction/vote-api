@@ -13,10 +13,11 @@ export class VoteResultModel {
      * 票数
      */
     @ApiProperty({ description: '票数' })
-    count: number;
+    totalCount: number;
     /**
      * 选举id
      */
     @ApiProperty({ description: '选举id' })
     electionId: string
+
 }

@@ -2,10 +2,10 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as jwt from 'jsonwebtoken';
-import { User } from 'src/entity/User';
-import { JwtPayload } from 'src/shared/jwt-payload.interface';
-import { XApiExceptionCode } from 'src/shared/api-exception-code';
-import { TokenInfo } from 'src/shared/token-info.interface';
+import { User } from '../entity/User';
+import { JwtPayload } from '../shared/jwt-payload.interface';
+import { XApiExceptionCode } from '../shared/api-exception-code';
+import { TokenInfo } from '../shared/token-info.interface';
 
 @Injectable()
 export class AuthService {

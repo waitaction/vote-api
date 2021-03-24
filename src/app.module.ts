@@ -14,9 +14,11 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
+      name: "default",
       type: "mongodb",
       database: "test",
       synchronize: true,
+      keepConnectionAlive: true,
       entities: [
         User,
         ElectionDetail,

@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Candidate } from 'src/entity/Candidate';
-import { ElectionDetail } from 'src/entity/ElectionDetail';
-import { VoteDetail } from 'src/entity/VoteDetail';
-import { Tool } from 'src/lib/tool';
-import { VoteResultModel } from 'src/shared/vote-result-model';
+import { Candidate } from '../entity/Candidate';
+import { ElectionDetail } from '../entity/ElectionDetail';
+import { VoteDetail } from '../entity/VoteDetail';
+import { Tool } from '../lib/tool';
+import { VoteDetailResultModel } from '../shared/vote-detail-result-model';
+import { VoteResultModel } from '../shared/vote-result-model';
 import { Repository } from 'typeorm';
 import { Voter } from '../entity/Voter';
 /**
@@ -81,9 +82,60 @@ export class VoterService {
                 // 按候选人count出票数
                 let count = await this.voteDetailRepository.count({ candidateId: item, electionId: electionId });
                 let candidate = await this.candidateRepository.findOne(item);
-                arr.push({ candidateName: candidate.name, count: count, electionId: electionId });
+                arr.push({ candidateName: candidate.name, totalCount: count, electionId: electionId });
             }
         }
         return arr;
+    }
+
+
+    /**
+     * 查询指定候选人的投票的用户
+     * @param electionId 选举id
+     * @param candidateId 候选人id
+     * @returns 返回选举结果
+     */
+    async queryVoteDetailNumber(electionId: string, candidateId: string, page: number, pageSize: number): Promise<Array<VoteDetailResultModel>> {
+
+        let arr: Array<VoteDetailResultModel> = new Array();
+        // 查询出此场选举有多少个候选人
+        let electionInfo = await this.electionRepository.findOne(electionId);
+        if (electionInfo && electionInfo.candidateIds && electionInfo.candidateIds.length > 0) {
+            let cId = electionInfo.candidateIds.find(m => m == candidateId);
+            if (cId == null) {
+                throw new Error("候选人不在这场选举");
+            } else {
+                let candidate = await this.candidateRepository.findOne(cId);
+                let voteList = await this.voteDetailRepository.find({ candidateId: cId, electionId: electionId });
+                let pagedVoteList = this.paged(voteList, page, pageSize);
+                let voterIdCards = pagedVoteList.map((value) => value.voterIdCard)
+                let voters = await this.voterRepository.find({ idCard: { '$in': voterIdCards } } as any);
+
+                arr.push({
+                    candidateIdCard: candidate.idCard,
+                    candidateName: candidate.name,
+                    totalCount: voteList.length,
+                    electionId: electionId,
+                    voters: voters
+                });
+            }
+        }
+        return arr;
+    }
+
+    /**
+     * 分页
+     */
+    paged(arr: Array<any>, page: number, pageSize: number): Array<any> {
+        let start = ((page - 1) * pageSize);
+        if (arr.length < start) {
+            return [];
+        }
+        let list = [];
+        for (let index = start; index < (arr.length > pageSize ? pageSize : arr.length); index++) {
+            const element = arr[index];
+            list.push(element);
+        }
+        return list;
     }
 }

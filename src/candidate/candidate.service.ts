@@ -24,7 +24,11 @@ export class CandidateService {
     async saveCandidate(idCard: string, name: string): Promise<Candidate> {
         let candidate = await this.candidateRepository.findOne({ idCard: idCard });
         if (candidate) {
-            candidate.name = name;
+            if (candidate.name != name) {
+                candidate.name = name;
+            } else {
+                return candidate;
+            }
         } else {
             candidate = new Candidate(idCard, name);
         }

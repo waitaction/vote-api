@@ -1,9 +1,11 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { ResponseCodeEnum } from 'src/shared/response-code.enum';
-import { ResponseModel } from 'src/shared/response-model';
-import { VoteModel } from 'src/shared/vote-model';
-import { VoteResultModel } from 'src/shared/vote-result-model';
+import { ResponseCodeEnum } from '../shared/response-code.enum';
+import { ResponseModel } from '../shared/response-model';
+import { VoteDetailResultModel } from '../shared/vote-detail-result-model';
+import { VoteModel } from '../shared/vote-model';
+import { VoteResultModel } from '../shared/vote-result-model';
 import { VoterService } from './voter.service';
 
 @ApiTags("投票")
@@ -23,7 +25,7 @@ export class VoterController {
      */
     @ApiOperation({ summary: '投票人投票' })
     @Post('vote')
-    @HttpCode(200)
+    @HttpCode(HttpStatus.OK)
     async vote(@Body() para: VoteModel): Promise<ResponseModel<Array<VoteResultModel>>> {
         // 登记或者更新投票人信息，再投票
         await this.voterService.saveVoter(para.email, para.idCard);
@@ -49,7 +51,29 @@ export class VoterController {
             // 选举已停止
             return new ResponseModel<Array<VoteResultModel>>(ResponseCodeEnum.VOTE_END, null, "选举已停止");
         }
+    }
 
 
+    /**
+     * 查询选举的实时票数和投票的用户
+     * @param electionId 选举id
+     */
+
+    @UseGuards(AuthGuard('jwt'))
+    @ApiOperation({ summary: '查询选举的实时票数和投票的用户' })
+    @Get('query-vote-number/:electionId/:candidateId/:page/:pageSize')
+    @HttpCode(HttpStatus.OK)
+    async queryVoteNumber(
+        @Param("electionId") electionId: string,
+        @Param("candidateId") candidateId: string,
+        @Param("page") page: string,
+        @Param("pageSize") pageSize: string
+    ): Promise<ResponseModel<Array<VoteDetailResultModel>>> {
+        let voteResult = await this.voterService.queryVoteDetailNumber(electionId, candidateId, parseInt(page), parseInt(pageSize));
+        if (voteResult) {
+            return new ResponseModel<Array<VoteDetailResultModel>>(ResponseCodeEnum.SUCCESS, voteResult);
+        } else {
+            return new ResponseModel<Array<VoteDetailResultModel>>(ResponseCodeEnum.FAIL, null, "查询失败");
+        }
     }
 }

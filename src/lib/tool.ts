@@ -96,7 +96,7 @@ export class Tool {
      * @param email 邮箱
      */
     static validateMail(email: string): boolean {
-        return /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(email);
+        return /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email);
     }
     /**克隆对像
      * @param obj

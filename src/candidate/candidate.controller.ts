@@ -1,11 +1,11 @@
 import { Body, Controller, Get, HttpCode, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiHeader, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Candidate } from 'src/entity/Candidate';
-import { Tool } from 'src/lib/tool';
-import { CandidateModel } from 'src/shared/candidate-model';
-import { ResponseCodeEnum } from 'src/shared/response-code.enum';
-import { ResponseModel } from 'src/shared/response-model';
+import { Candidate } from '../entity/Candidate';
+import { Tool } from '../lib/tool';
+import { CandidateModel } from '../shared/candidate-model';
+import { ResponseCodeEnum } from '../shared/response-code.enum';
+import { ResponseModel } from '../shared/response-model';
 import { CandidateService } from './candidate.service';
 
 /**

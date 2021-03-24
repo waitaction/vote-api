@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ElectionModel } from 'src/shared/election-model';
-import { ElectionStateEnum } from 'src/shared/election-state.enum';
+import { ElectionModel } from '../shared/election-model';
+import { ElectionStateEnum } from '../shared/election-state.enum';
 import { Repository } from 'typeorm';
 import { ElectionDetail } from '../entity/ElectionDetail';
 /**
@@ -18,6 +18,9 @@ export class ElectionService {
      * 创建一个选举
      */
     async createElection(electionInfo: ElectionModel): Promise<ElectionDetail> {
+        if (electionInfo.endTime < electionInfo.beginTime) {
+            throw new Error("选举的结束时间不能小于开始时间");
+        }
         let election = new ElectionDetail(electionInfo.beginTime, electionInfo.endTime, electionInfo.candidateIds);
         return this.electionRepository.save(election);
     }
