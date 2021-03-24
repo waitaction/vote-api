@@ -1,4 +1,4 @@
-import { Entity, ObjectIdColumn, ObjectID, Column, PrimaryColumn } from "typeorm";
+import { Entity, ObjectIdColumn, ObjectID, Column } from "typeorm";
 
 /**
  * 候选人
@@ -6,11 +6,15 @@ import { Entity, ObjectIdColumn, ObjectID, Column, PrimaryColumn } from "typeorm
 @Entity()
 export class Candidate {
 
+
+    @ObjectIdColumn()
+    id: ObjectID;
+
     /**
      * 身份证号(香港)
      */
-    @Column({ primary: true, unique: true, length: 10 })
-    id: string;
+    @Column({ unique: true })
+    idCard: string;
 
     /**
      * 候选人姓名
@@ -35,8 +39,13 @@ export class Candidate {
     @Column()
     valid?: boolean;
 
-    constructor(id: string, name: string) {
-        this.id = id;
+    /**
+     * 创建候选人实例
+     * @param idCard 候选人身份证
+     * @param name 候选人姓名
+     */
+    constructor(idCard: string, name: string) {
+        this.idCard = idCard;
         this.name = name;
         this.valid = true;
         this.createTime = new Date().getTime();

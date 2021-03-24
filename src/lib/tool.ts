@@ -88,7 +88,15 @@ export class Tool {
      * 验证身份证号是否为香港身份证号
      */
     static validateIdCardHk(idCard: string): boolean {
-        return /^w\d{6}\(\d\)$/.test(idCard);
+        return /^[A-Z]\d{6}\(\d\)$/.test(idCard);
+    }
+
+    /**
+     * 验证是否正确的邮箱
+     * @param email 邮箱
+     */
+    static validateMail(email: string): boolean {
+        return /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(email);
     }
     /**克隆对像
      * @param obj

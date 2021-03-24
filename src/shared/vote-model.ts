@@ -27,7 +27,6 @@ export class VoteModel {
     /**
      * 候选人身份证号
      */
-
     @ApiProperty({ description: '候选人身份证号' })
     candidateId: string;
 }

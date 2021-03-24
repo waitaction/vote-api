@@ -32,7 +32,8 @@ import { AuthModule } from './auth/auth.module';
     CandidateModule,
     ElectionModule,
     VoterModule,
-    AuthModule],
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

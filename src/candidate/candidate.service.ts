@@ -21,8 +21,18 @@ export class CandidateService {
      * @param idCard 身份证号
      * @returns 返回候选人信息
      */
-    addCandidate(idCard: string, name: string): Promise<Candidate> {
-        let candidate = new Candidate(idCard, name);
-        return this.candidateRepository.save(candidate);
+    async saveCandidate(idCard: string, name: string): Promise<Candidate> {
+        let candidate = await this.candidateRepository.findOne({ idCard: idCard });
+        if (candidate) {
+            candidate.name = name;
+        } else {
+            candidate = new Candidate(idCard, name);
+        }
+        let result = await this.candidateRepository.save(candidate);
+        return result;
+    }
+
+    async getCandidate(idCard: string): Promise<Candidate> {
+        return this.candidateRepository.findOne({ idCard: idCard });
     }
 }

@@ -12,7 +12,7 @@ export async function bootstrap() {
     .setTitle('简易投票系统')
     .setDescription('简易投票系统接口')
     .setVersion('1.0')
-    .addTag('简易投票系统')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);

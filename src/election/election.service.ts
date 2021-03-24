@@ -22,8 +22,6 @@ export class ElectionService {
         return this.electionRepository.save(election);
     }
 
-
-
     /**
      * 更改选举状态
      * @param electionId 选举id
@@ -35,10 +33,16 @@ export class ElectionService {
             throw new Error("选举不存在");
         }
         if (state == ElectionStateEnum.START) {
+            //选举开始时间设为当前时间
+            election.beginTime = new Date().getTime();
             election.valid = true;
         } else if (state == ElectionStateEnum.END) {
+            //选举结束时间设为当前时间
+            election.endTime = new Date().getTime();
             election.valid = false;
         }
         return this.electionRepository.save(election);
     }
+
+
 }

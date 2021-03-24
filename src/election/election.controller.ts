@@ -5,8 +5,9 @@ import { AuthGuard } from '@nestjs/passport';
 import { ElectionDetail } from 'src/entity/ElectionDetail';
 import { ElectionService } from './election.service';
 import { ResponseModel } from 'src/shared/response-model';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiHeader, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags("选举")
 @Controller('election')
 @UseGuards(AuthGuard('jwt'))
 export class ElectionController {
@@ -16,15 +17,20 @@ export class ElectionController {
 
     }
 
-    @ApiOperation({ summary: '新增一个选举' })
-    @Post('createElection')
+    @ApiOperation({ summary: '添加一场选举' })
+    @ApiBearerAuth()
+    @Post('create-election')
     @HttpCode(200)
     async createElection(@Body() para: ElectionModel): Promise<ResponseModel<ElectionDetail>> {
-        const election = await this.electionService.createElection(para);
-        if (election) {
-            return new ResponseModel<ElectionDetail>(ResponseCodeEnum.SUCCESS, election);
+        if (para.candidateIds && para.candidateIds.length >= 2) {
+            const election = await this.electionService.createElection(para);
+            if (election) {
+                return new ResponseModel<ElectionDetail>(ResponseCodeEnum.SUCCESS, election);
+            } else {
+                return new ResponseModel<ElectionDetail>(ResponseCodeEnum.FAIL, null);
+            }
         } else {
-            return new ResponseModel<ElectionDetail>(ResponseCodeEnum.FAIL, null);
+            return new ResponseModel<ElectionDetail>(ResponseCodeEnum.FAIL, null, "候选人需要至少两个人");
         }
     }
 

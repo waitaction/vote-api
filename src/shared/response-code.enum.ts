@@ -13,5 +13,15 @@ export enum ResponseCodeEnum {
     /**
      * 错误
      */
-    ERROR = -2
+    ERROR = -2,
+    /**
+     * 投票未开始
+     */
+    VOTE_NOT_BEGIN = -3,
+    /**
+     * 投票已结束
+     */
+    VOTE_END = -4,
+
+
 }
