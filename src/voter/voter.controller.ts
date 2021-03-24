@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { ResponseCodeEnum } from '../shared/response-code.enum';
 import { ResponseModel } from '../shared/response-model';
 import { VoteDetailResultModel } from '../shared/vote-detail-result-model';
@@ -61,6 +61,10 @@ export class VoterController {
 
     @UseGuards(AuthGuard('jwt'))
     @ApiOperation({ summary: '查询选举的实时票数和投票的用户' })
+    @ApiParam({ name: "electionId", description: '选举id' })
+    @ApiParam({ name: "candidateId", description: '候选人id' })
+    @ApiParam({ name: "page", description: '页数' })
+    @ApiParam({ name: "pageSize", description: '每页显示数量' })
     @Get('query-vote-number/:electionId/:candidateId/:page/:pageSize')
     @HttpCode(HttpStatus.OK)
     async queryVoteNumber(

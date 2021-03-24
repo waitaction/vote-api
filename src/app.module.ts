@@ -16,7 +16,8 @@ import { AuthModule } from './auth/auth.module';
     TypeOrmModule.forRoot({
       name: "default",
       type: "mongodb",
-      database: "test",
+      url: process.env.MONGODB_URL ? process.env.MONGODB_URL : "mongodb://localhost",
+      database: "votedb",
       synchronize: true,
       keepConnectionAlive: true,
       entities: [

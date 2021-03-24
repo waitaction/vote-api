@@ -35,7 +35,7 @@ export class ElectionController {
             return new ResponseModel<ElectionDetail>(ResponseCodeEnum.FAIL, null, "候选人需要至少两个人");
         }
     }
-    @ApiOperation({ summary: '现在开始一场选举' })
+    @ApiOperation({ summary: '立即开始一场选举' })
     @ApiBearerAuth()
     @Post('start-election')
     @HttpCode(200)
@@ -48,7 +48,7 @@ export class ElectionController {
         }
     }
 
-    @ApiOperation({ summary: '现在结束一场选举' })
+    @ApiOperation({ summary: '立即结束一场选举' })
     @ApiBearerAuth()
     @Post('end-election')
     @HttpCode(200)
