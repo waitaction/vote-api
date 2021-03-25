@@ -10,6 +10,7 @@ import { Candidate } from '../entity/Candidate';
 @Module({
   imports: [TypeOrmModule.forFeature([Voter, VoteDetail, ElectionDetail, Candidate])],
   providers: [VoterService],
-  controllers: [VoterController]
+  controllers: [VoterController],
+  exports: [TypeOrmModule]
 })
 export class VoterModule { }

@@ -5,7 +5,9 @@ import { XHttpExceptionFilter } from './core/http-exception.filter';
 
 export async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  //全局异常处理
   app.useGlobalFilters(new XHttpExceptionFilter());
+  //允许跨域
   app.enableCors();
 
   const options = new DocumentBuilder()
@@ -18,4 +20,6 @@ export async function bootstrap() {
   SwaggerModule.setup('api', app, document);
   await app.listen(3000);
 }
+
+
 bootstrap();

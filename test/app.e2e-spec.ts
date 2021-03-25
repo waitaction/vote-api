@@ -78,7 +78,7 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer())
       .post('/election/create-election').auth(token, { type: "bearer" }).send({
         beginTime: new Date().getTime(),
-        endTime: new Date().getTime() + 1000 * 60 * 60 * 24 * 5, // 五天后结束
+        endTime: new Date().getTime() + 1000 * 60 * 3, // 五天后结束 1000 * 60 * 60 * 24 * 5      |  (1000 * 60 * 3) 分钟后结束
         candidateIds: [
           candidateId1,
           candidateId2

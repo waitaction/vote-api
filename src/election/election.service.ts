@@ -42,7 +42,7 @@ export class ElectionService {
         } else if (state == ElectionStateEnum.END) {
             //选举结束时间设为当前时间
             election.endTime = new Date().getTime();
-            election.valid = false;
+            election.valid = true;
         }
         return this.electionRepository.save(election);
     }
