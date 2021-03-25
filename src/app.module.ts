@@ -88,8 +88,8 @@ export class AppModule {
               //发送邮件,测试用,实际项目请写在配置文件
               let mailServer = new MailServer({
                 service: 'QQ',
-                user: 'littlenotice@qq.com',
-                password: 'shcxiuqmidaadadh',
+                user: 'QQ邮箱@qq.com',
+                password: '邮箱密码',
               });
               mailServer.sendMail(mails, "您参加的选举投票结果通知", `<div>${content}</div>`);
               item.valid = false;
